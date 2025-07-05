@@ -4,48 +4,41 @@ import Transaction from "@/models/Transaction";
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: Record<string, string> }
+  { params }: { params: { id: string } }
 ) {
-  try {
-    await connectDB();
-    const body = await req.json();
+  await connectDB();
 
-    const updated = await Transaction.findByIdAndUpdate(
-      params.id,
-      {
-        description: body.description,
-        amount: body.amount,
-        date: body.date,
-        category: body.category,
-      },
-      { new: true }
-    );
+  const body = await req.json();
 
-    if (!updated) {
-      return NextResponse.json({ message: "Transaction not found" }, { status: 404 });
-    }
+  const updated = await Transaction.findByIdAndUpdate(
+    params.id,
+    {
+      description: body.description,
+      amount: body.amount,
+      date: body.date,
+      category: body.category,
+    },
+    { new: true }
+  );
 
-    return NextResponse.json(updated);
-  } catch (err) {
-    return NextResponse.json({ error: "PUT Error", details: String(err) }, { status: 500 });
+  if (!updated) {
+    return NextResponse.json({ message: "Transaction not found" }, { status: 404 });
   }
+
+  return NextResponse.json(updated);
 }
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: Record<string, string> }
+  { params }: { params: { id: string } }
 ) {
-  try {
-    await connectDB();
+  await connectDB();
 
-    const deleted = await Transaction.findByIdAndDelete(params.id);
+  const deleted = await Transaction.findByIdAndDelete(params.id);
 
-    if (!deleted) {
-      return NextResponse.json({ message: "Transaction not found" }, { status: 404 });
-    }
-
-    return NextResponse.json({ message: "Deleted successfully" });
-  } catch (err) {
-    return NextResponse.json({ error: "DELETE Error", details: String(err) }, { status: 500 });
+  if (!deleted) {
+    return NextResponse.json({ message: "Transaction not found" }, { status: 404 });
   }
+
+  return NextResponse.json({ message: "Deleted" });
 }
