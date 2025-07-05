@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💰 Personal Finance Visualizer
 
-## Getting Started
+A full-stack personal finance dashboard built using **Next.js**, **React**, **shadcn/ui**, **MongoDB**, and **Recharts**. This project was developed as part of a 6-month remote internship assignment at **Yardstick AI**, focused on building responsive and scalable AI-integrated applications.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 📌 Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### ✅ Stage 1 – Basic Transaction Tracking
+- Add / Edit / Delete transactions (amount, date, description)
+- Transaction list view
+- Monthly expenses bar chart (Recharts)
+- Basic form validation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### ✅ Stage 2 – Categories
+- Predefined transaction categories (Food, Transport, etc.)
+- Category-wise pie chart
+- Dashboard summary cards:
+  - Total expenses
+  - Category breakdown
+  - Most recent transactions
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### ✅ Stage 3 – Budgeting
+- Set monthly category budgets
+- Budget vs actual comparison chart
+- Smart spending insights based on user data
 
-## Learn More
+### ✅ Bonus
+- Smooth scroll to edit form on transaction edit
+- Responsive design with consistent UI (shadcn/ui)
+- Error states handled gracefully
+- Clean modular folder structure and reusable components
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🛠️ Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Technology   | Purpose                               |
+|--------------|----------------------------------------|
+| **Next.js**  | Full-stack React framework             |
+| **React**    | UI development                         |
+| **shadcn/ui**| Professional, accessible components    |
+| **MongoDB**  | Database for transactions and budgets  |
+| **Recharts** | Data visualizations (bar, pie charts)  |
+| **Tailwind CSS 3.4** | Styling framework               |
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🚀 Live Preview
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+>check githb repo for more detail 
+---
+
+
