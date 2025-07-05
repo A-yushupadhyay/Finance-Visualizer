@@ -2,21 +2,17 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import Transaction from "@/models/Transaction";
 
-// Correct context type for dynamic route params
-type Context = {
-  params: {
-    id: string;
-  };
-};
-
-// PUT: Update transaction by ID
-export async function PUT(req: NextRequest, context: Context) {
+// ✅ CORRECT PARAM TYPE: no custom Context type, just inline object
+export async function PUT(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   await connectDB();
 
   const body = await req.json();
 
   const updated = await Transaction.findByIdAndUpdate(
-    context.params.id,
+    params.id,
     {
       description: body.description,
       amount: body.amount,
@@ -33,11 +29,13 @@ export async function PUT(req: NextRequest, context: Context) {
   return NextResponse.json(updated);
 }
 
-// DELETE: Delete transaction by ID
-export async function DELETE(req: NextRequest, context: Context) {
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   await connectDB();
 
-  const deleted = await Transaction.findByIdAndDelete(context.params.id);
+  const deleted = await Transaction.findByIdAndDelete(params.id);
 
   if (!deleted) {
     return NextResponse.json({ message: "Transaction not found" }, { status: 404 });
