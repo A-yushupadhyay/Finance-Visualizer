@@ -1,16 +1,16 @@
+import { NextRequest } from "next/server";
 import { connectDB } from "@/lib/db";
 import Transaction from "@/models/Transaction";
-import { NextRequest, NextResponse } from "next/server";
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   await connectDB();
-
   const body = await req.json();
+
   const updated = await Transaction.findByIdAndUpdate(
-    params.id,
+    context.params.id,
     {
       description: body.description,
       amount: body.amount,
@@ -21,20 +21,22 @@ export async function PUT(
   );
 
   if (!updated) {
-    return NextResponse.json({ message: "Transaction not found" }, { status: 404 });
+    return Response.json({ message: "Transaction not found" }, { status: 404 });
   }
 
-  return NextResponse.json(updated);
+  return Response.json(updated);
 }
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   await connectDB();
-  const deleted = await Transaction.findByIdAndDelete(params.id);
+  const deleted = await Transaction.findByIdAndDelete(context.params.id);
+
   if (!deleted) {
-    return NextResponse.json({ message: "Transaction not found" }, { status: 404 });
+    return Response.json({ message: "Transaction not found" }, { status: 404 });
   }
-  return NextResponse.json({ message: "Deleted" });
+
+  return Response.json({ message: "Deleted" });
 }
