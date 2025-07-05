@@ -2,44 +2,55 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import Transaction from "@/models/Transaction";
 
-// ✅ CORRECT PARAM TYPE: no custom Context type, just inline object
+//  Correct function signature per Next.js 13+/14+ App Router
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Record<string, string> }
 ) {
-  await connectDB();
+  try {
+    await connectDB();
 
-  const body = await req.json();
+    const { id } = context.params;
+    const body = await req.json();
 
-  const updated = await Transaction.findByIdAndUpdate(
-    params.id,
-    {
-      description: body.description,
-      amount: body.amount,
-      date: body.date,
-      category: body.category,
-    },
-    { new: true }
-  );
+    const updated = await Transaction.findByIdAndUpdate(
+      id,
+      {
+        description: body.description,
+        amount: body.amount,
+        date: body.date,
+        category: body.category,
+      },
+      { new: true }
+    );
 
-  if (!updated) {
-    return NextResponse.json({ message: "Transaction not found" }, { status: 404 });
+    if (!updated) {
+      return NextResponse.json({ message: "Transaction not found" }, { status: 404 });
+    }
+
+    return NextResponse.json(updated);
+  } catch (error) {
+    return NextResponse.json({ error: "PUT error", details: error }, { status: 500 });
   }
-
-  return NextResponse.json(updated);
 }
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Record<string, string> }
 ) {
-  await connectDB();
+  try {
+    await connectDB();
 
-  const deleted = await Transaction.findByIdAndDelete(params.id);
+    const { id } = context.params;
 
-  if (!deleted) {
-    return NextResponse.json({ message: "Transaction not found" }, { status: 404 });
+    const deleted = await Transaction.findByIdAndDelete(id);
+
+    if (!deleted) {
+      return NextResponse.json({ message: "Transaction not found" }, { status: 404 });
+    }
+
+    return NextResponse.json({ message: "Deleted" });
+  } catch (error) {
+    return NextResponse.json({ error: "DELETE error", details: error }, { status: 500 });
   }
-
-  return NextResponse.json({ message: "Deleted" });
 }
